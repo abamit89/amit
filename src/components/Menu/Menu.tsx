@@ -2,8 +2,32 @@ import Link from 'next/link';
 import { Avatar, Box, Container, NavLink } from 'theme-ui';
 
 import { Logo } from '../Icons/Logo';
+import { useState, useEffect } from 'react';
+import  avatar  from '../../../__mocks__/user.json';
 
-export const Menu = () => (
+export const Menu = () => {
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  return (
+    <div style={{ display: visible ? 'block' : 'none' }}>
+
   <Box
     as="menu"
     sx={{
@@ -35,7 +59,9 @@ export const Menu = () => (
         height: 48,
         padding: 1,
         backgroundColor: '#d8d8d8',
+        backgroundImage: `url(${avatar})`,
       }}
     />
   </Box>
-);
+  </div>
+)};

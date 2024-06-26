@@ -9,3 +9,5 @@ export const getServerSideProps = ({ res }: { res: ServerResponse }) => {
   res.setHeader('Location', '/en/US');
   return { props: {} };
 };
+
+
